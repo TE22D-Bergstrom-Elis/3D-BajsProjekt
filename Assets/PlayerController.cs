@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
   [SerializeField]
   float speed = 5;
 
-  [SerializeField]
-  float rotationSpeed = 180;
-
   void Start()
   {
     animator = GetComponent<Animator>();
@@ -21,12 +18,14 @@ public class PlayerController : MonoBehaviour
 
   void Update()
   {
-    transform.Rotate(Vector3.up, moveInput.x * rotationSpeed * Time.deltaTime);
-
-    Vector3 movement = transform.forward * moveInput.y;
+    Vector3 movement = Camera.main.transform.right * moveInput.x
+                     + Camera.main.transform.forward * moveInput.y;
 
     if (movement.magnitude > 0)
     {
+      movement.y = 0;
+      movement.Normalize();
+      transform.forward = movement;
       animator.SetBool("moving", true);
     }
     else
