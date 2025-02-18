@@ -27,7 +27,12 @@ public class LookController : MonoBehaviour
     );
 
     transform.Rotate(Vector3.up, lookInput.x * sensitivity.x);
-    // head.transform.Rotate(Vector3.right, lookInput.y * sensitivity.y);
+
+    print(Physics.Raycast(
+      head.transform.position,
+      head.transform.forward)
+      );
+
   }
 
   void OnLook(InputValue value)

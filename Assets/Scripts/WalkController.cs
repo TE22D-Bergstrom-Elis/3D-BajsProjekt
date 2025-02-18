@@ -7,6 +7,9 @@ public class WalkController : MonoBehaviour
   [SerializeField]
   float walkSpeed = 5;
 
+  [SerializeField]
+  float jumpForce = 100;
+
   float velocityY = 0;
 
   CharacterController controller;
@@ -20,7 +23,7 @@ public class WalkController : MonoBehaviour
   {
     velocityY += Physics.gravity.y * Time.deltaTime;
 
-    if (controller.isGrounded)
+    if (controller.isGrounded && velocityY < 0)
     {
       velocityY = 0;
     }
@@ -33,6 +36,12 @@ public class WalkController : MonoBehaviour
 
     controller.Move(
       Time.deltaTime * walkSpeed * movement);
+  }
+
+  void OnJump(InputValue value)
+  {
+    // print("Jump around!");
+    velocityY = jumpForce;
   }
 
   void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
