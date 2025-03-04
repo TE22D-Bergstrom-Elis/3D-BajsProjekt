@@ -28,15 +28,27 @@ public class LookController : MonoBehaviour
 
     transform.Rotate(Vector3.up, lookInput.x * sensitivity.x);
 
-    print(Physics.Raycast(
-      head.transform.position,
-      head.transform.forward)
-      );
+
 
   }
 
   void OnLook(InputValue value)
   {
     lookInput = value.Get<Vector2>();
+  }
+
+  void OnUse(InputValue value)
+  {
+    RaycastHit hit;
+    if (Physics.Raycast(
+      head.transform.position, head.transform.forward,
+      out hit, 1))
+    {
+      ButtonController button = hit.transform.GetComponent<ButtonController>();
+      if (button != null)
+      {
+        button.Press();
+      }
+    }
   }
 }
